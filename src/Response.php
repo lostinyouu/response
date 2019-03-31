@@ -50,20 +50,16 @@ class Response
     /**
      * Return a 201 response with the given created resource.
      *
-     * @param null $resource
-     * @param TransformerAbstract|null $transformer
-     *
+     * @param $message
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withCreated($resource = null, TransformerAbstract $transformer = null)
+    public function withCreated($message = '请求成功')
     {
-        $this->statusCode = HttpResponse::HTTP_CREATED;
 
-        if (is_null($resource)) {
-            return $this->json('请求成功');
-        }
+        return $this->setStatusCode(
+            HttpResponse::HTTP_CREATED
+        )->withError($message);
 
-        return $this->item($resource, $transformer);
     }
 
     /**
